@@ -8,127 +8,265 @@ kabischev@gmail.com
 
 * Instrumentation
 
-* Instrumentation
+In context of computer programming, instrumentation refers to an ability to monitor or measure the level of a product's performance, to diagnose errors and to write trace information. Programmers implement instrumentation in the form of code instructions that monitor specific components in a system. Instrumentation is necessary to review the performance of the application.
 
-In context of computer programming, instrumentation refers to an ability to monitor or measure the level of a product's performance, to diagnose errors and to write trace information. Programmers implement instrumentation in the form of code instructions that monitor specific components in a system (for example, instructions may output logging information to appear on screen). Instrumentation is necessary to review the performance of the application.
+* JUNO
+
+- 4 mobile applications
+- ~60 microservices
+- hundreds of running containers
+- thousands RPS
 
 * Logs
 
-* Std log package
+* Logs
 
-.code examples/logs/std/main.go /START OMIT/,/END OMIT/ HLx
+- Fundamental part of applications
+- Show progress of execution
+- Help to debug application
+- Save hours for developers & OPS team
 
-* Std log package
+* What to log?
 
-.code examples/logs/std/main.go /START OMIT/,/END OMIT/ HLx
- 2017/02/11 14:53:08 request received: /user/1
- 2017/02/11 14:53:08 error occured: some error
- 2017/02/11 14:53:08 request received: /user/2
- 2017/02/11 14:53:08 request received: /user/3
- 2017/02/11 14:53:08 request received: /user/4
- 2017/02/11 14:53:08 request received: /user/5
- 2017/02/11 14:53:08 error occured: some error
- 2017/02/11 14:53:08 error occured: some error
+- Errors
+- Events
+- State
+- Requests
+- Some debug information
 
-* Std log package
+* How to log?
 
-.code examples/logs/std2/main.go /LOG1 OMIT/,/LOG2 OMIT/ HLx
+Std log package:
 
-* Std log package
+- no log level support
+- only plain-text format
+- no struct-logging support
 
-.code examples/logs/std2/main.go /START OMIT/,/END OMIT/ HLx
+Alternatives:
 
- db7f03bb-b9a0-43c8-97e0-ed395531d94e 2017/02/11 14:55:15 request received: /user/1
- db7f03bb-b9a0-43c8-97e0-ed395531d94e 2017/02/11 14:55:15 error occured: some error // query #1
- a772ac1a-0a9b-4968-af8f-4e6ded1bc48c 2017/02/11 14:55:15 request received: /user/2
- f2935158-b173-4840-8a46-06abada8f771 2017/02/11 14:55:15 request received: /user/3
- 92c05c1e-e963-4fda-af2b-c0dfb481238f 2017/02/11 14:55:15 request received: /user/4
- 9d3a8213-998a-4a0e-b481-24066c644444 2017/02/11 14:55:15 request received: /user/5
- a772ac1a-0a9b-4968-af8f-4e6ded1bc48c 2017/02/11 14:55:15 error occured: some error // query #2
- 92c05c1e-e963-4fda-af2b-c0dfb481238f 2017/02/11 14:55:15 error occured: some error // query #4
+- *github.com/Sirupsen/logrus*
+- github.com/uber-go/zap
+- github.com/golang/glog
 
-* 3rd party log packages
-
-- logrus
-- zap
-
-.link http://awesome-go.com
+.link https://github.com/avelino/awesome-go#logging
 
 * Structured logging
 
-.code examples/logs/logrus/main.go /LOG1 OMIT/,/LOG2 OMIT/ HLx
+Helps to answer to questions: *What*? *Where*? *When*?
+.code examples/logs/structured/example.json
 
- INFO[0001] request received: /user/1                requestID=6366e218-4520-4ac1-84f5-96f14105ead4
- INFO[0004] request received: /user/2                requestID=d8fab5af-18fb-4971-a0ea-80110ede2041
- INFO[0005] request received: /user/3                requestID=5b6938d1-7b13-43b5-93c1-3c41dfd6692b
- ERRO[0005] error occured: some error                requestID=5b6938d1-7b13-43b5-93c1-3c41dfd6692b
+* Structured logging with logrus
 
-* Structured logging
+.code examples/logs/structured/main.go /START OMIT/,/END OMIT/ HLx
 
-.code examples/logs/logrus/main.go /USER1 OMIT/,/USER2 OMIT/ HLx
- INFO[0024] request received: /user/2       requestID=f54f5ff5-da60-4d38-a2f8-57417d411665 userID=2
- INFO[0047] request received: /user/4       requestID=28522c2a-9202-4e43-8b73-e8b571f7b83a userID=4
- ERRO[0047] error occured: some error       requestID=28522c2a-9202-4e43-8b73-e8b571f7b83a userID=4
+* Logging infrastructure
 
+.image examples/logs/structured/overview.png _ 650
 
-* Logging
+* Logs
 
-- Use structured loggers
-- Add request-scoped data to fields
-- Use machine friendly formats
-- Write logs to stderr
-- Use log aggregation systems (ELK, Graylog, Splunk, etc)
+- Avoid writing to files
+- Use structured logging
+- Add requestID to log entries
+- Don`t enable only *errors* in production
+- Use log management system
 
 * Metrics
 
-* Push vs pull model
-
-Image about push & pull models. Differences, proms & cons
-
 * Metrics
 
-List of popular libraries for collecting metrics
+- Show performance of application
+- Helps to detect impacts of deployments
+- Useful for alerting
 
-* Metrics
+* What to measure?
 
-- *Gauges* erterteg i4reithm eroiti 5452o6n erogih o4i5ny ornhofgret wtiwejrt oiwejrtoifjgij horityer oitjyer otiyje roityjertoij
-- Counters
-- Histograms
+Requests:
 
-* Metrics
+- rate
+- errors
+- duration
 
-What to collect?
+System:
 
-* Push model
+- number of goroutines
+- memory usage
+- gc performance
 
- - Graphite
- - Statsd
- - InfluxDB
+* How to measure? Libraries
 
-* Push model
- - name collision
- - configuration
- - performance
+- expvar package
+- github.com/rcrowley/go-metrics
+- github.com/go-kit/metrics
+- *github.com/prometheus/client_golang*
+- github.com/influxdata/influxdb/client
 
-* Pull model
- - no collisions!
- - zero configuration
+* How to measure? Storages
 
-* Prometheus
+Push model:
 
-How to wrap http.Handler?
+- Graphite
+- OpenTSDB
+- InfluxDB
 
-* Prometheus
+Pull model:
 
-Example of scraping. Builtin metrics (memory, goroutines, other staff)
+- *Prometheus*
 
-* Prometheus
+* Monitoring infrastructure
 
-Example of custom collector. Channel length.
+.image examples/metrics/pull_model.png _ 650
 
-Notice about single call.
+* Prometheus & pull model
 
+- No metric name collisions
+- Application knows nothing about monitoring
+- Easy local debug
+- Clean and good client API
+
+* Multidimensional data model
+
+ go_goroutines{service="ms_routing", instance="10.0.1.54", group="backend0"}
+
+*go_goroutines* - metric name
+*service*, *instance*, *group* - labels names
+
+* Types of metrics
+
+- *Counter* is a cumulative metric that represents a single numerical value that only ever goes up.
+- *Gauge*  is a metric that represents a single numerical value that can arbitrarily go up and down.
+- *Histogram* samples observations and counts them in configurable buckets.
+- *Summary* similar to a histogram. Also provides a total count of observations and a sum of all observed values, it calculates configurable quantiles over a sliding time window.
+
+* Histogram
+
+.code examples/metrics/histogram/main.go /START OMIT/,/END OMIT/
+
+Creates metrics:
+
+ # HELP request_duration_seconds handler duration
+ # TYPE request_duration_seconds histogram
+ request_duration_seconds_bucket{le="0.01"} 3
+ request_duration_seconds_bucket{le="0.03"} 11
+ request_duration_seconds_bucket{le="0.05"} 15
+ request_duration_seconds_bucket{le="+Inf"} 16
+ request_duration_seconds_sum 0.3769818180000001
+ request_duration_seconds_count 16
+
+* Summary
+
+.code examples/metrics/summary/main.go /START OMIT/,/END OMIT/
+
+Creates metrics:
+
+ # HELP request_duration_seconds handler duration
+ # TYPE request_duration_seconds summary
+ request_duration_seconds{quantile="0.5"} 0.020407053
+ request_duration_seconds{quantile="0.9"} 0.035535534
+ request_duration_seconds{quantile="0.99"} 0.049688516
+ request_duration_seconds_sum 0.46448871900000005
+ request_duration_seconds_count 21
+
+* How we use it?
+
+- Middlewares for RPC handlers
+- Decorators for external APIs & libraries
+- Integration with database/storage drivers
+- Business events & metrics
 
 * Distributed tracing
+
+* Distributed system
+
+.image examples/tracing/tracing_problem.png _ 400
+
+
+* Tracing systems
+
+- Google Dapper (~2004)
+- Twitter Zipkin (2012)
+- Sourcegraph Appdash (2015)
+
+* OpenTracing.io
+
+A vendor-neutral open standard for distributed tracing.
+
+- Standardized semantic (span, trace, events, baggage)
+- Standardized client libraries (Go, Java, Python)
+- Popular tracers support (Zipkin, Appdash, Lightstep, Jaeger)
+
+.link http://opentracing.io
+.link https://github.com/opentracing/opentracing-go
+
+* Distributed request
+
+.image examples/tracing/tracing_problem.png _ 400
+
+* Trace
+
+.image examples/tracing/tracing_kolbasa_3.png _ 1000
+
+* Span
+
+Each span has following state:
+
+- Operation name
+- Start timestamp
+- End timestamp
+- Span tags
+- Span logs
+- SpanContext
+
+* Tracing infrastructure
+
+.image examples/tracing/tracing_info.png _ 500
+
+* Creating spans
+
+Create root span
+
+.code examples/tracing/example.go /SPAN1 OMIT/,/SPAN2 OMIT/
+
+Create child span
+
+.code examples/tracing/example.go /SPAN3 OMIT/,/SPAN4 OMIT/
+
+* Context support
+
+.code examples/tracing/example.go /SPAN5 OMIT/,/SPAN6 OMIT/
+
+* Context propagation (client-side)
+
+.code examples/tracing/example.go /SPAN7 OMIT/,/SPAN8 OMIT/ HLx
+
+* Context propagation (server-side)
+
+.code examples/tracing/example.go /SPAN9 OMIT/,/SPAN10 OMIT/ HLx
+
+* Context propogation
+
+.image examples/tracing/client_server.png _ 1000
+
+* HTTP request tracing
+
+.code examples/tracing/http.go /START OMIT/,/END OMIT/ HLx
+
+* Span logs
+
+.image examples/tracing/http_events.png _ 800
+
+* Span tags
+
+.image examples/tracing/http_tags.png _ 600
+
+* How to start?
+
+- Start adding spans to your application
+- Run local simple tracing system for debugging
+- Add logs & tags to spans
+- Deploy tracing system to production
+- Enjoy
+
+* Questions?
 
 : Notes
