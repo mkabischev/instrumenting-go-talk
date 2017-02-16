@@ -2,7 +2,7 @@ Instrumenting Go application
 16 Feb 2017
 
 Mike Kabischev
-Software engineer, juno
+Software engineer, Juno
 kabischev@gmail.com
 @mkabischev
 
@@ -134,7 +134,7 @@ Pull model:
 
 * Prometheus & pull model
 
-- No metric name collisions
+- Helps to avoid metric name collisions
 - Application doesn`t depend on monitoring system
 - Easy local debug
 - Clean and good client API
