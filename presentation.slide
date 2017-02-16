@@ -8,7 +8,13 @@ kabischev@gmail.com
 
 * Instrumentation
 
-In context of computer programming, instrumentation refers to an ability to monitor the level of a product's performance, to diagnose errors and to write trace information. Programmers implement instrumentation in the form of code instructions. Instrumentation is necessary to review the performance of the application.
+In context of computer programming instrumentation refers to an ability
+
+- to monitor the level of a product's performance
+- to diagnose errors
+- to write trace information
+
+Programmers implement instrumentation in the form of code instructions. Instrumentation is necessary to review the performance of the application.
 
 * Juno
 
@@ -62,7 +68,7 @@ Helps to answer to questions: *What*? *Where*? *When*?
 
 * Logging infrastructure
 
-.image examples/logs/structured/overview.png _ 650
+.image examples/logs/structured/overview2.png _ 680
 
 * Logs
 
@@ -124,7 +130,7 @@ Pull model:
 
 * Monitoring infrastructure
 
-.image examples/metrics/pull_model.png _ 650
+.image examples/metrics/pull_model_2.png _ 750
 
 * Prometheus & pull model
 
@@ -199,7 +205,7 @@ Creates metrics:
 
 * Distributed system
 
-.image examples/tracing/tracing_problem.png _ 400
+.image examples/tracing/tracing_problem_2.png _ 400
 
 
 * Tracing systems
@@ -221,11 +227,11 @@ A vendor-neutral open standard for distributed tracing.
 
 * Distributed request
 
-.image examples/tracing/tracing_problem.png _ 400
+.image examples/tracing/tracing_problem_2.png _ 400
 
 * Trace
 
-.image examples/tracing/tracing_kolbasa_3.png _ 1000
+.image examples/tracing/tracing_kolbasa_4.png _ 1000
 
 * Span
 
@@ -237,10 +243,6 @@ Each span has following state:
 - Span tags
 - Span logs
 - SpanContext
-
-* Tracing infrastructure
-
-.image examples/tracing/tracing_info.png _ 500
 
 * Creating spans
 
@@ -256,21 +258,17 @@ Create child span
 
 .code examples/tracing/example.go /SPAN5 OMIT/,/SPAN6 OMIT/
 
-* Context propagation (client-side)
-
-.code examples/tracing/example.go /SPAN7 OMIT/,/SPAN8 OMIT/ HLx
-
-* Context propagation (server-side)
-
-.code examples/tracing/example.go /SPAN9 OMIT/,/SPAN10 OMIT/ HLx
-
 * Context propagation
 
-.image examples/tracing/client_server.png _ 1000
+.image examples/tracing/propagation.png _ 500
 
 * HTTP request tracing
 
 .code examples/tracing/http.go /START OMIT/,/END OMIT/ HLx
+
+* HTTP request tracing
+
+.image examples/tracing/client_server.png _ 1000
 
 * Span logs
 
@@ -286,7 +284,8 @@ Create child span
 - Run local simple tracing system for debugging
 - Add logs & tags to spans
 - Deploy tracing system to production
-- Enjoy
+- ...
+- PROFIT!!!
 
 * Questions?
 
