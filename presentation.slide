@@ -86,7 +86,7 @@ Helps to answer to questions: *What*? *Where*? *When*?
 
 - Show performance of application
 - Helps to detect impacts of deployments
-- Useful for alerting
+- May trigger alerts
 
 * What to measure?
 
@@ -129,7 +129,7 @@ Pull model:
 * Prometheus & pull model
 
 - No metric name collisions
-- Application knows nothing about monitoring
+- Application doesn`t depend on monitoring system
 - Easy local debug
 - Clean and good client API
 
