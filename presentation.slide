@@ -8,14 +8,15 @@ kabischev@gmail.com
 
 * Instrumentation
 
-In context of computer programming, instrumentation refers to an ability to monitor or measure the level of a product's performance, to diagnose errors and to write trace information. Programmers implement instrumentation in the form of code instructions that monitor specific components in a system. Instrumentation is necessary to review the performance of the application.
+In context of computer programming, instrumentation refers to an ability to monitor the level of a product's performance, to diagnose errors and to write trace information. Programmers implement instrumentation in the form of code instructions. Instrumentation is necessary to review the performance of the application.
 
-* JUNO
+* Juno
 
 - 4 mobile applications
 - ~60 microservices
 - hundreds of running containers
 - thousands RPS
+- 40+ backend engineers
 
 * Logs
 
@@ -65,11 +66,19 @@ Helps to answer to questions: *What*? *Where*? *When*?
 
 * Logs
 
-- Avoid writing to files
-- Use structured logging
-- Add requestID to log entries
-- Don`t enable only *errors* in production
-- Use log management system
+1. Use log management system
+
+- ELK stack
+- Graylog2
+- etc
+
+2. Use structured logging
+
+- requestID (*always*)
+- userID
+- etc
+
+3. Don`t enable only *errors* mode in production
 
 * Metrics
 
@@ -126,10 +135,22 @@ Pull model:
 
 * Multidimensional data model
 
- go_goroutines{service="ms_routing", instance="10.0.1.54", group="backend0"}
+Metrics
 
-*go_goroutines* - metric name
+ request_count{service="ms_routing", instance="10.0.1.1", group="backend0"} 14163
+ request_count{service="ms_routing", instance="10.0.1.2", group="backend0"} 14195
+ request_count{service="ms_routing", instance="10.0.2.1", group="backend1"} 15434
+
+*request_count* - metric name
 *service*, *instance*, *group* - labels names
+
+Count all requests
+
+ sum(request_count{service="ms_routing"}) 43792
+
+Count requests in group *backend0*
+
+ sum(request_count{service="ms_routing", group="backend0"}) 28358
 
 * Types of metrics
 
@@ -243,7 +264,7 @@ Create child span
 
 .code examples/tracing/example.go /SPAN9 OMIT/,/SPAN10 OMIT/ HLx
 
-* Context propogation
+* Context propagation
 
 .image examples/tracing/client_server.png _ 1000
 
