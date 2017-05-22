@@ -10,11 +10,11 @@ import (
 
 // SPAN1 OMIT
 func foo() {
-	sp := opentracing.StartSpan("some_operation")
+	sp := opentracing.StartSpan("some_operation") // HLx
+	defer sp.Finish()
 
 	// ...
 
-	sp.Finish()
 }
 
 // SPAN2 OMIT
@@ -23,23 +23,23 @@ func foo() {
 func bar(parent opentracing.Span) {
 	sp := opentracing.StartSpan(
 		"another_operation",
-		opentracing.ChildOf(parent.Context()),
+		opentracing.ChildOf(parent.Context()), // HLx
 	)
+	defer sp.Finish()
 
 	// ..
 
-	sp.Finish()
 }
 
 // SPAN4 OMIT
 
 // SPAN5 OMIT
 func doSmth(ctx context.Context) {
-	span, ctx := opentracing.StartSpanFromContext(ctx, "operation_name")
+	span, ctx := opentracing.StartSpanFromContext(ctx, "operation_name") // HLx
+	defer span.Finish()
 
 	// ..
 
-	defer span.Finish()
 }
 
 // SPAN6 OMIT
