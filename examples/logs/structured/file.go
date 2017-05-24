@@ -9,26 +9,19 @@ import (
 type Logger interface{}
 
 // START OMIT
-const key int = 0
 
-<<<<<<< HEAD
+type key int
+
+const loggerKey key = 0
+
 func ToContext(ctx context.Context, l Logger) context.Context {
-	return context.WithValue(ctx, key, l)
+	return context.WithValue(ctx, loggerKey, l)
 }
 
-=======
->>>>>>> 550e9efcfdbc7871354677fb09fdae3e976cc41a
 func FromContext(ctx context.Context) Logger {
-	return ctx.Value(key).(Logger)
+	return ctx.Value(loggerKey).(Logger)
 }
 
-<<<<<<< HEAD
-=======
-func ToContext(ctx context.Context, l Logger) context.Context {
-	return context.WithValue(ctx, key, l)
-}
-
->>>>>>> 550e9efcfdbc7871354677fb09fdae3e976cc41a
 // END OMIT
 
 type Request struct{}
