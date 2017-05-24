@@ -24,6 +24,16 @@ Programmers implement instrumentation in the form of code instructions. Instrume
 - thousands RPS
 - 40+ backend engineers
 
+* Twelve-factor app
+
+- Use *declarative* formats for setup automation
+- Offer *maximum* *portability* between execution environments
+- Are suitable for *deployment* on modern *cloud* *platforms*
+- *Minimize* *divergence* between development and production
+- Can *scale* *up* without significant changes to tooling, architecture, or development practices
+
+.link https://12factors.net
+
 * Logs
 
 * Logs
@@ -143,20 +153,20 @@ Pull model:
 
 Metrics
 
- request_count{service="ms_routing", instance="10.0.1.1", group="backend0"} 14163
- request_count{service="ms_routing", instance="10.0.1.2", group="backend0"} 14195
- request_count{service="ms_routing", instance="10.0.2.1", group="backend1"} 15434
+ request_count{service="routing", instance="10.0.1.1", group="backend0"} 14163
+ request_count{service="routing", instance="10.0.1.2", group="backend0"} 14195
+ request_count{service="routing", instance="10.0.2.1", group="backend1"} 15434
 
 *request_count* - metric name
 *service*, *instance*, *group* - labels names
 
 Count all requests
 
- sum(request_count{service="ms_routing"}) 43792
+ sum(request_count{service="routing"}) 43792
 
 Count requests in group *backend0*
 
- sum(request_count{service="ms_routing", group="backend0"}) 28358
+ sum(request_count{service="routing", group="backend0"}) 28358
 
 * Types of metrics
 
@@ -196,10 +206,14 @@ Creates metrics:
 
 * How we use it?
 
-- Middlewares for RPC handlers
+- Middlewares for RPC layer
 - Decorators for external APIs & libraries
 - Integration with database/storage drivers
 - Business events & metrics
+
+* Metric decorators
+
+.code examples/metrics/middlewares.go /START OMIT/,/END OMIT/ HLx
 
 * Distributed tracing
 
