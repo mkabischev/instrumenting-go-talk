@@ -11,14 +11,24 @@ type Logger interface{}
 // START OMIT
 const key int = 0
 
+<<<<<<< HEAD
 func ToContext(ctx context.Context, l Logger) context.Context {
 	return context.WithValue(ctx, key, l)
 }
 
+=======
+>>>>>>> 550e9efcfdbc7871354677fb09fdae3e976cc41a
 func FromContext(ctx context.Context) Logger {
 	return ctx.Value(key).(Logger)
 }
 
+<<<<<<< HEAD
+=======
+func ToContext(ctx context.Context, l Logger) context.Context {
+	return context.WithValue(ctx, key, l)
+}
+
+>>>>>>> 550e9efcfdbc7871354677fb09fdae3e976cc41a
 // END OMIT
 
 type Request struct{}

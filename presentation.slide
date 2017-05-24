@@ -1,10 +1,22 @@
 Instrumenting Go application
-16 Feb 2017
+24 May 2017
 
 Mike Kabischev
 Software engineer, Juno
 kabischev@gmail.com
 @mkabischev
+
+* Juno
+
+- 4 mobile applications
+- ~70 microservices
+- hundreds of running containers
+- thousands RPS
+- 40+ backend engineers
+
+* Architecture overview
+
+.image examples/images/overview.png 580 _
 
 * Instrumentation
 
@@ -16,13 +28,16 @@ In context of computer programming instrumentation refers to an ability
 
 Programmers implement instrumentation in the form of code instructions. Instrumentation is necessary to review the performance of the application.
 
-* Juno
+* Twelve-factor app manifesto
 
-- 4 mobile applications
-- ~60 microservices
-- hundreds of running containers
-- thousands RPS
-- 40+ backend engineers
+- Use *declarative* formats for setup automation
+- Offer *maximum* *portability* between execution environments
+- Are suitable for *deployment* on modern *cloud* *platforms*
+- *Minimize* *divergence* between development and production
+- Can *scale* *up* without significant changes to tooling, architecture, or development practices
+
+.link https://12factors.net
+
 
 * Twelve-factor app
 
@@ -72,9 +87,21 @@ Alternatives:
 Helps to answer to questions: *What*? *Where*? *When*?
 .code examples/logs/structured/example.json
 
-* Structured logging with logrus
+* Logger + Context = ❤️
 
-.code examples/logs/structured/main.go /START OMIT/,/END OMIT/ HLx
+.code examples/logs/structured/file.go /START OMIT/,/END OMIT/ HLx
+
+* Logger + Context = ❤️
+
+Prepare logger
+.code examples/logs/structured/file.go /PREPARE_START OMIT/,/PREPARE_END OMIT/ HLx
+
+Use it in handler
+.code examples/logs/structured/file.go /HANDLER_START OMIT/,/HANDLER_END OMIT/ HLx
+
+* Structured logging
+
+.code examples/logs/structured/main /START OMIT/,/END OMIT/ HLx
 
 * Logging infrastructure
 
@@ -106,17 +133,22 @@ Helps to answer to questions: *What*? *Where*? *When*?
 
 * What to measure?
 
-Requests:
+Runtime:
 
-- rate
+- number of goroutines/threads
+- memory usage & GC timing
+
+Service:
+
+- request rate
+- request duration
 - errors
-- duration
 
-System:
+External resources:
 
-- number of goroutines
-- memory usage
-- gc performance
+- request rate/duration
+- errors
+- connections
 
 * How to measure? Libraries
 
@@ -175,35 +207,6 @@ Count requests in group *backend0*
 - *Histogram* samples observations and counts them in configurable buckets.
 - *Summary* similar to a histogram. Also provides a total count of observations and a sum of all observed values, it calculates configurable quantiles over a sliding time window.
 
-* Histogram
-
-.code examples/metrics/histogram/main.go /START OMIT/,/END OMIT/
-
-Creates metrics:
-
- # HELP request_duration_seconds handler duration
- # TYPE request_duration_seconds histogram
- request_duration_seconds_bucket{le="0.01"} 3
- request_duration_seconds_bucket{le="0.03"} 11
- request_duration_seconds_bucket{le="0.05"} 15
- request_duration_seconds_bucket{le="+Inf"} 16
- request_duration_seconds_sum 0.3769818180000001
- request_duration_seconds_count 16
-
-* Summary
-
-.code examples/metrics/summary/main.go /START OMIT/,/END OMIT/
-
-Creates metrics:
-
- # HELP request_duration_seconds handler duration
- # TYPE request_duration_seconds summary
- request_duration_seconds{quantile="0.5"} 0.020407053
- request_duration_seconds{quantile="0.9"} 0.035535534
- request_duration_seconds{quantile="0.99"} 0.049688516
- request_duration_seconds_sum 0.46448871900000005
- request_duration_seconds_count 21
-
 * How we use it?
 
 - Middlewares for RPC layer
@@ -227,6 +230,7 @@ Creates metrics:
 - Google Dapper (~2004)
 - Twitter Zipkin (2012)
 - Sourcegraph Appdash (2015)
+- Uber Jaeger (2017)
 
 * OpenTracing.io
 
@@ -262,15 +266,15 @@ Each span has following state:
 
 Create root span
 
-.code examples/tracing/example.go /SPAN1 OMIT/,/SPAN2 OMIT/
+.code examples/tracing/example.go /SPAN1 OMIT/,/SPAN2 OMIT/ HLx
 
 Create child span
 
-.code examples/tracing/example.go /SPAN3 OMIT/,/SPAN4 OMIT/
+.code examples/tracing/example.go /SPAN3 OMIT/,/SPAN4 OMIT/ HLx
 
 * Context support
 
-.code examples/tracing/example.go /SPAN5 OMIT/,/SPAN6 OMIT/
+.code examples/tracing/example.go /SPAN5 OMIT/,/SPAN6 OMIT/ HLx
 
 * Context propagation
 
@@ -292,14 +296,13 @@ Create child span
 
 .image examples/tracing/http_tags.png _ 600
 
-* How to start?
+* Integration roadmap
 
-- Start adding spans to your application
-- Run local simple tracing system for debugging
-- Add logs & tags to spans
-- Deploy tracing system to production
-- ...
-- PROFIT!!!
+- RPC layer (middlewares & clients)
+- external APIs
+- databases & caches
+- critical paths
+- tags & logs
 
 * Questions?
 
