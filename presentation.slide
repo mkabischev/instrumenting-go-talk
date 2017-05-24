@@ -6,6 +6,16 @@ Software engineer, Juno
 kabischev@gmail.com
 @mkabischev
 
+* Instrumentation
+
+In context of computer programming instrumentation refers to an ability
+
+- to monitor the level of a product's performance
+- to diagnose errors
+- to write trace information
+
+Programmers implement instrumentation in the form of code instructions. Instrumentation is necessary to review the performance of the application.
+
 * Juno
 
 - 4 mobile applications
@@ -17,27 +27,6 @@ kabischev@gmail.com
 * Architecture overview
 
 .image examples/images/overview.png 580 _
-
-* Instrumentation
-
-In context of computer programming instrumentation refers to an ability
-
-- to monitor the level of a product's performance
-- to diagnose errors
-- to write trace information
-
-Programmers implement instrumentation in the form of code instructions. Instrumentation is necessary to review the performance of the application.
-
-* Twelve-factor app manifesto
-
-- Use *declarative* formats for setup automation
-- Offer *maximum* *portability* between execution environments
-- Are suitable for *deployment* on modern *cloud* *platforms*
-- *Minimize* *divergence* between development and production
-- Can *scale* *up* without significant changes to tooling, architecture, or development practices
-
-.link https://12factors.net
-
 
 * Twelve-factor app
 
